@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+    <html>
+        <head>
+           <meta charset="utf-8">
+           <meta http-equiv="X-UA-Compatible" content="IE=edge">
+           <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+           <title>Apollo Cafe</title>
+           <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+           <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+           <link rel="icon" href="{{ url_for('static', filename='images/fevicon.png') }}" type="image/gif" />
+           <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+           <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+        </head>
+<body>
+      <div class="header_section">
+         <div class="container-fluid">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+               <a class="navbar-brand" href="{{ url_for('index') }}"><img src="{{ url_for('static', filename='images/logo.png') }}" class="logo"></a>
+               <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                   <span class="navbar-toggler-icon"></span>
+               </button>
+               <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                   <ul class="navbar-nav ml-auto">
+                       <li class="nav-item">
+                           <a class="nav-link" href="{{ url_for('user_index') }}">Home</a>
+                       </li>
+                       <li class="nav-item active">
+                           <a class="nav-link" href="{{ url_for('user_coffees') }}">Coffees</a>
+                       </li>
+                       <li class="nav-item">
+                           <a class="nav-link" href="{{ url_for('user_orders') }}">Orders</a>
+                       </li>
+                       <li class="nav-item">
+                           <a class="nav-link" href="{{ url_for('basket') }}">
+                               <img src="{{ url_for('static', filename='images/basketicon.png') }}" alt="Basket" style="max-height: 32px;"> <!-- Adjust max-height as needed -->
+                           </a>
+                       </li>
+                       <li class="nav-item">
+                           <a class="nav-link" href="{{ url_for('login') }}">
+                               <i class="fa fa-user" aria-hidden="true"></i> Logout
+                           </a>
+                       </li>
+                   </ul>
+               </div>
+           </nav>
+            
+         </div>
+      </div>
+      <div class="coffee_section layout_padding">
+         <div class="container">
+            <div class="row">
+               <h1 class="coffee_taital">Coffee Offer For You</h1>
+            </div>
+         </div>
+         <div class="coffee_section_2">
+            <div id="main_slider" class="carousel slide" data-ride="carousel">
+               <div class="carousel-inner">
+                  <div class="carousel-item active">
+                     <div class="container-fluid">
+                        <div class="row">
+                           {% for product in products %}
+                           <div class="col-lg-3 col-md-6">
+                              <div class="coffee_img">
+                                 <img src="{{ url_for('static', filename='images/img-' + product.product_id + '.png') }}">
+
+                              </div>
+                              
+                              <h3 class="types_text">{{ product.name }}</h3>
+                              <div class="coffee_order_form">
+                                 <label for="size-{{ product.id }}">Choose size:</label>
+                                 <select name="size" id="size-{{ product.id }}">
+                                    <option value="small">Small - ${{ product.prices.small }}</option>
+                                    <option value="medium">Medium - ${{ product.prices.medium }}</option>
+                                    <option value="large">Large - ${{ product.prices.large }}</option>
+                                 </select>
+                                 <label for="quantity-{{ product.id }}">Quantity:</label>
+                                 <input type="number" id="quantity-{{ product.id }}" name="quantity" min="1" max="10" value="1">
+                                 <label for="deliveryTime-{{ product.id }}">Delivery Time:</label>
+                                 <select id="deliveryTime-{{ product.id }}" name="deliveryTime">
+                                    
+                                    <option value="now">Now</option>
+                                    <option value="35minutes">In 35 Minutes</option>
+                                    <option value="1hour">In 1 Hour</option>
+                                    <option value="tomorrow">Tomorrow</option>
+                                 </select>
+                                 <button type="button" onclick="addToCart('{{ product.id }}', 'img-1.png')">Add to Cart</button>
+                              </div>
+                           </div>
+                           {% endfor %}
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+
+
+      <script>
+         function addToCart(productId, imageFilename) {
+    var sizeElement = document.getElementById('size-' + productId);
+    var quantityElement = document.getElementById('quantity-' + productId);
+    var deliveryTimeElement = document.getElementById('deliveryTime-' + productId);
+
+    if (sizeElement && quantityElement && deliveryTimeElement) {
+        var size = sizeElement.value;
+        var quantity = quantityElement.value;
+        var deliveryTime = deliveryTimeElement.value;
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/add_to_cart", true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.onreadystatechange = function () {
+            if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+                console.log("Item added to cart successfully!");
+            }
+        }
+        var data = JSON.stringify({"productId": productId, "size": size, "quantity": quantity, "deliveryTime": deliveryTime});
+        xhr.send(data);
+    } else {
+        console.error('Element not found for product ID:', productId);
+    }
+}
+         function updateCartDisplay() {
+            var cart = JSON.parse(localStorage.getItem('cart')) || [];
+            var cartItemsContainer = document.getElementById('cartItems');
+            cartItemsContainer.innerHTML = '';
+        
+            cart.forEach(function(item) {
+                var itemDiv = document.createElement('div');
+                var img = document.createElement('img');
+                img.src = "{{ url_for('static', filename='images/') }}" + item.image;
+                img.alt = 'Product Image';
+                img.classList.add('product-img');
+        
+                var details = document.createElement('p');
+                details.innerText = 'Product ID: ' + item.productId + ', Size: ' + item.size + ', Quantity: ' + item.quantity + ', Delivery Time: ' + item.deliveryTime;
+                
+                itemDiv.appendChild(img);
+                itemDiv.appendChild(details);
+                cartItemsContainer.appendChild(itemDiv);
+            });
+         }
+    </script>
+    
+     
+   </body>
+</html>

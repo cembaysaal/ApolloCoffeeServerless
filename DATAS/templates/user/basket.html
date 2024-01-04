@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Apollo Cafe</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images/fevicon.png') }}" type="image/gif" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+</head>
+<body>
+    <div class="header_section">
+        <div class="container-fluid">
+           <nav class="navbar navbar-expand-lg navbar-light bg-light">
+              <a class="navbar-brand" href="{{ url_for('index') }}"><img src="{{ url_for('static', filename='images/logo.png') }}" class="logo"></a>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                  <ul class="navbar-nav ml-auto">
+                   <li class="nav-item">
+                       <a class="nav-link" href="{{ url_for('user_index') }}">Home</a>
+                   </li>
+                   <li class="nav-item">
+                       <a class="nav-link" href="{{ url_for('user_coffees') }}">Coffees</a>
+                   </li>
+                   <li class="nav-item">
+                       <a class="nav-link" href="{{ url_for('user_orders') }}">Orders</a>
+                   </li>
+                      <li class="nav-item">
+                          <a class="nav-link" href="{{ url_for('basket') }}">
+                              <img src="{{ url_for('static', filename='images/basketicon.png') }}" alt="Basket" style="max-height: 32px;"> <!-- Adjust max-height as needed -->
+                          </a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link" href="{{ url_for('login') }}">
+                              <i class="fa fa-user" aria-hidden="true"></i> Logout
+                          </a>
+                      </li>
+                  </ul>
+              </div>
+          </nav>
+           
+        </div>
+    
+    <div class="coffee_section layout_padding">
+        <div class="container">
+            <div class="row">
+                <h1 class="coffee_taital">Your Basket</h1>
+                <div id="productList"></div>
+            </div>
+        </div>
+    </div>                                                                                                              
+
+    <div id="cartSection" class="container">
+        <table id="cartItems" class="table">
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>User Name</th>
+                    <th>User ID</th>
+                    <th>Product ID</th>
+                    <th>Size</th>
+                    <th>Quantity</th>
+                    <th>Description</th>
+                    <th>Delivery Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr class="order_item">
+                    <td>{{ order.order_id }}</td>
+                    <td>{{ order.user_name }}</td>
+                    <td>{{ order.user_id }}</td>
+                    <td>{{ order.productId }}</td>
+                    <td>{{ order.size }}</td>
+                    <td>{{ order.quantity }}</td>
+                    <td>{{ order.description }}</td>
+                    <td>{{ order.delivery_time }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <button id="confirmButton" class="btn btn-success">Confirm Basket</button>
+        <button id="clearButton" class="btn btn-warning">Clear Basket</button>
+    </div>
+
+    <div class="modal fade" id="confirmOrderModal" tabindex="-1" role="dialog" aria-labelledby="confirmOrderModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmOrderModalLabel">Confirm Order</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to confirm your order?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="confirmOrderButton">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="thankYouModal" tabindex="-1" role="dialog" aria-labelledby="thankYouModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="thankYouModalLabel">Order Confirmation</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <p>Thank you for your order!</p>
+                <p><strong>User Name:</strong> <span id="thankYouUserName">{{ user_name }}</span></p>
+                <p><strong>User ID:</strong> <span id="thankYouUserId">{{ user_id }}</span></p>
+                <p><strong>Order ID:</strong> <span id="thankYouOrderId">{{ order_id }}</span></p>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+        </div>
+    </div>
+  
+  
+    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('#confirmButton').click(function() {
+                $('#confirmOrderModal').modal('show');
+            });
+    
+            $('#confirmOrderModal .btn-primary').click(function() {
+                $('#confirmOrderModal').modal('hide');
+                $('#thankYouUserName').text('Cem Baysal');
+                $('#thankYouUserId').text('1');
+                $('#thankYouOrderId').text('14545649872346546');
+                $('#thankYouOrderDetails').text('2 Turkish coffees');
+                    $('#thankYouModal').modal('show');
+            });
+        });
+    </script>
+    
+    
+    
+    
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+    <html>
+        <head>
+           <meta charset="utf-8">
+           <meta http-equiv="X-UA-Compatible" content="IE=edge">
+           <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+           <title>Apollo Cafe</title>
+           <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+           <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+           <link rel="icon" href="{{ url_for('static', filename='images/fevicon.png') }}" type="image/gif" />
+           <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+           <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+        </head>
+<body>
+      <div class="header_section">
+         <div class="container-fluid">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+               <a class="navbar-brand" href="{{ url_for('index') }}"><img src="{{ url_for('static', filename='images/logo.png') }}" class="logo"></a>
+               <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                   <span class="navbar-toggler-icon"></span>
+               </button>
+               <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                   <ul class="navbar-nav ml-auto">
+                       <li class="nav-item active ">
+                           <a class="nav-link" href="{{ url_for('user_index') }}">Home</a>
+                       </li>
+                       <li class="nav-item">
+                           <a class="nav-link" href="{{ url_for('user_coffees') }}">Coffees</a>
+                       </li>
+                       <li class="nav-item">
+                           <a class="nav-link" href="{{ url_for('user_orders') }}">Orders</a>
+                       </li>
+                       <li class="nav-item">
+                           <a class="nav-link" href="{{ url_for('basket') }}">
+                               <img src="{{ url_for('static', filename='images/basketicon.png') }}" alt="Basket" style="max-height: 32px;"> <!-- Adjust max-height as needed -->
+                           </a>
+                       </li>
+                       <li class="nav-item">
+                           <a class="nav-link" href="{{ url_for('index') }}">
+                               <i class="fa fa-user" aria-hidden="true"></i> Logout
+                           </a>
+                       </li>
+                   </ul>
+               </div>
+           </nav>
+         </div>
+         <div class="banner_section layout_padding">
+            <div class="container">
+               <div id="banner_slider" class="carousel slide" data-ride="carousel">
+                  <div class="carousel-inner">
+                     <div class="carousel-item active">
+                        <div class="row">
+                           <div class="col-md-6">
+                              <div class="banner_img">                                        
+                                 <img src="{{ url_for('static', filename='images/banner-img.png') }}">
+                              </div>
+                           </div>
+                           <div class="col-md-6">
+                              <div class="banner_taital_main">
+                                 <h1 class="banner_taital">Apollo Coffee</h1>
+                                 <h5 class="tasty_text">Awaken Your Senses, Elevate Your Spirit</h5>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="coffee_section layout_padding">
+         <div class="container">
+            <div class="row">
+               <h1 class="coffee_taital">Coffee Menus</h1>
+            </div>
+         </div>
+         <div class="coffee_section_2">
+            <div id="main_slider" class="carousel slide" data-ride="carousel">
+               <div class="carousel-inner">
+                  <div class="carousel-item active">
+                     <div class="container-fluid">
+                        <div class="row">
+                           <div class="col-lg-3 col-md-6">
+                              <img src="{{ url_for('static', filename='images/img-1.png') }}">
+                              <h3 class="types_text">TURKISH COFFEE</h3>
+                              <p class="lorem_text">Experience the rich, authentic flavor of traditional Turkish coffee, meticulously brewed with finely ground beans for a strong, unfiltered coffee topped with a distinctive creamy foam. </p>
+                           </div>
+                           <div class="col-lg-3 col-md-6">
+                              <img src="{{ url_for('static', filename='images/img-2.png') }}">
+                              <h3 class="types_text">HOT LATTE</h3>
+                              <p class="lorem_text">A smooth and creamy blend of steamed milk and rich, aromatic espresso, perfectly layered to create a harmonious balance of flavors.</p>
+                           </div>
+                           <div class="col-lg-3 col-md-6">
+                              <img src="{{ url_for('static', filename='images/img-3.png') }}">
+                              <h3 class="types_text">AMERICANO</h3>
+                              <p class="lorem_text">A timeless coffee classic made by diluting rich, full-bodied espresso with hot water, resulting in a smooth, robust flavor with a delicately crema-topped finish. I</p>
+                           </div>
+                           <div class="col-lg-3 col-md-6">
+                              <img src="{{ url_for('static', filename='images/img-4.png') }}">
+                              <h3 class="types_text">SAHLEP</h3>
+                              <p class="lorem_text">A traditional Turkish winter drink made from orchid root flour, steamed milk, and sweetened with a hint of sugar. </p>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="carousel-inner">
+                     <div class="carousel-item active">
+                        <div class="container-fluid">
+                           <div class="row">
+                              <div class="col-lg-3 col-md-6">
+                                 <img src="{{ url_for('static', filename='images/img-5.png') }}">
+                                 <h3 class="types_text">ESPRESSO</h3>
+                                 <p class="lorem_text">This intense, richly-flavored drink with a velvety crema layer is the foundation of all great coffee and a must-try for true aficionados.</p>
+                              </div>
+                              <div class="col-lg-3 col-md-6">
+                                 <img src="{{ url_for('static', filename='images/img-6.png') }}">
+                                 <h3 class="types_text">FILTER COFFEE</h3>
+                                 <p class="lorem_text">Made by slowly dripping hot water through finely ground beans, this method extracts a clean, aromatic, and well-balanced cup, perfect for those who appreciate the subtle nuances of coffee.</p>
+                              </div>
+                              <div class="col-lg-3 col-md-6">
+                                 <img src="{{ url_for('static', filename='images/img-7.png') }}">
+                                 <h3 class="types_text">FLAT WHITE</h3>
+                                 <p class="lorem_text">This coffee, with its velvety texture and strong coffee flavor, is topped with a thin layer of microfoam, making it a perfect choice for those who enjoy a creamy yet potent coffee experience.</p>
+                              </div>
+                              <div class="col-lg-3 col-md-6">
+                                 <img src="{{ url_for('static', filename='images/img-8.png') }}">
+                                 <h3 class="types_text">NESCAFE</h3>
+                                 <p class="lorem_text">Start your day with our NESCAFÉ, a globally beloved instant coffee known for its convenience and consistent taste. Each cup offers a quick, aromatic brew with a well-rounded flavor</p>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+
+      <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+      <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+   </body>
+</html>

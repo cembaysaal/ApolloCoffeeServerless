@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+    <html>
+        <head>
+           <meta charset="utf-8">
+           <meta http-equiv="X-UA-Compatible" content="IE=edge">
+           <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+           <title>Apollo Cafe</title>
+           <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+           <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+           <link rel="icon" href="{{ url_for('static', filename='images/fevicon.png') }}" type="image/gif" />
+           <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+           <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+        </head>
+<body>
+    <div class="header_section">
+        <div class="container-fluid">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <a class="navbar-brand" href="{{ url_for('index') }}"><img src="{{ url_for('static', filename='images/logo.png') }}" class="logo"></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item ">
+                            <a class="nav-link" href="{{ url_for('admin_index') }}">Home</a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link" href="{{ url_for('admin_coffees') }}">Coffees</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="{{ url_for('admin_panel') }}">Admin Panel</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('admin_orders') }}">Customer Orders</a>
+                        </li>
+                        
+                    </ul>
+                    <form class="form-inline my-2 my-lg-0">
+                        <div class="login_bt">
+                            <ul>
+                                <li><a href="{{ url_for('logout') }}"><span class="user_icon"><i class="fa fa-user" aria-hidden="true"></i></span>Logout</a></li>
+                            </ul>
+                        </div>
+                    </form>
+                </div>
+            </nav>
+        </div>
+        <form method="POST" action="{{ url_for('admin_panel') }}">
+        <div class="product-entry-container">
+            <div class="container">
+                <div class="row justify-content-center align-items-center" style="height:100vh;">
+                    <div class="col-4">
+                        <div class="login-form">
+                            <form id="userInputForm" method="post" action="{{ url_for('submit_product') }}" class="border p-4 bg-light">
+                                <div class="form-group">
+                                    <label for="coffeeName">Product Name:</label>
+                                    <input type="text" class="form-control" id="coffeeName" name="coffeeName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="coffeeID">Product ID:</label>
+                                    <input type="text" class="form-control" id="coffeeID" name="coffeeID" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="product_description">Product Description:</label>
+                                    <input type="text" class="form-control" id="product_description" name="product_description" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="smallPrice">Small Price:</label>
+                                    <input type="number" class="form-control" id="smallPrice" name="smallPrice" step="1" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="mediumPrice">Medium Price:</label>
+                                    <input type="number" class="form-control" id="mediumPrice" name="mediumPrice" step="1" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="largePrice">Large Price:</label>
+                                    <input type="number" class="form-control" id="largePrice" name="largePrice" step="1" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">Add Product</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+        <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+</body>
+</html>
