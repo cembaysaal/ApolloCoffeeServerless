@@ -62,3 +62,7 @@ Contributions are welcome! Follow these steps to contribute:
 ## License 📄
 
 Distributed under the MIT License. See `LICENSE` for more information.
+
+## Screenshots 📸
+
+![screencapture-cembaysal-pythonanywhere-2024-02-01-11_49_47](https://github.com/cembaysaal/ApolloCoffeeServerless/assets/77170652/f3d6f373-1719-4392-b62c-4a83e8e9ef64)
